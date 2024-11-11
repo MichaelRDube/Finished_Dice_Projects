@@ -3,7 +3,7 @@
 # Update package list
 sudo apt update
 
-# Install Python and pip (if not already installed)
+# Install Python, pip, and venv (if not already installed)
 if ! command -v python3 &>/dev/null; then
     echo "Python not found. Installing Python..."
     sudo apt install -y python3 python3-pip
@@ -11,19 +11,30 @@ else
     echo "Python is already installed."
 fi
 
+# Ensure python3-venv is installed for creating virtual environments
+echo "Installing python3-venv if not already installed..."
+sudo apt install -y python3-venv
+
 # Upgrade pip to the latest version
 echo "Upgrading pip to the latest version..."
 pip3 install --upgrade pip
 
-# Install system libraries only with apt where necessary
+# Install system libraries
 echo "Installing required system libraries..."
-sudo apt install -y python3-tk libsqlite3-dev v4l-utils
+sudo apt install -y python3-tk libsqlite3-dev v4l-utils python3-opencv
 
-# Install required Python libraries with pip
-echo "Installing and upgrading Python libraries with pip..."
-pip3 install --upgrade pillow ultralytics opencv-python opencv-python-headless
+# Create and activate a virtual environment
+echo "Creating a virtual environment..."
+python3 -m venv myenv
 
-# Configure camera to match training conditions
+echo "Activating the virtual environment..."
+source myenv/bin/activate
+
+# Install Python libraries within the virtual environment
+echo "Installing and upgrading Python libraries within the virtual environment..."
+pip install --upgrade pillow ultralytics
+
+# Configure camera settings (optional)
 echo "Configuring camera settings..."
 v4l2-ctl -d /dev/video0 --set-ctrl=brightness=128
 v4l2-ctl -d /dev/video0 --set-ctrl=contrast=150
