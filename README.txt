@@ -3,12 +3,15 @@ Author:  Michael Dube
 Instructions for use:
 
 Plug in USB camera.  This project uses a Logitech MXBRIO.
+
 If not already run, navigate to the directory which holds
 die-rolling projects and run install_setup.sh
 (sudo ./install_setup.sh).
+
 This should install any libraries needed for the project
 on Ubuntu Linux and configure the camera settings to match
 training conditioins.
+
 These installations will be made inside a virtual
 environment.  This virtual environment must be activated
 before using scripts.  While in the directory that holds
@@ -16,6 +19,9 @@ install_setup.sh, enter:
 "source myenv/bin/activate"
 and the virtual environment will be active in that terminal
 until deactivated, or until the terminal closes.
+When the virtual environment is active, it should say
+"(myenv)" all the way to the left of the current terminal
+line.
 
 Each of the following scripts is slightly unique according
 to which die is being evaluated.
