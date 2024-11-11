@@ -65,7 +65,7 @@ def process_images(image_dir):
             img = cv2.resize(img, new_size)
 
             cv2.imshow('Image Preview', img)
-            cv2.waitKey(1)
+            cv2.waitKey(0)
 
             results = model(img)
 
@@ -132,7 +132,7 @@ def process_images(image_dir):
 
             # Show the image with boxes and labels
             cv2.imshow('Image Preview', img)
-            cv2.waitKey(1)
+            cv2.waitKey(0)
 
     #move files from captured_images to processed_images
     for file in os.listdir('./captured_images'):
