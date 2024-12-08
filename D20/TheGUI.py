@@ -133,7 +133,7 @@ def correct():
         WHERE rollNum = ?
     '''
     
-    query_data = (int(corrections_box.get())-1, current_image.rollnum)
+    query_data = (int(corrections_box.get()), current_image.rollnum)
     
     cursor.execute(update_query, query_data)
     

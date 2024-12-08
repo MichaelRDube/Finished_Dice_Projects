@@ -60,8 +60,18 @@ def process_images(image_dir, save_cropped_dir='temp_crops'):
             # First stage: Detect objects
             results_stage1 = model_stage1(img)
 
+            firstlook = True
             for i, result in enumerate(results_stage1):
+
                 for bbox in result.boxes:
+
+                    if firstlook:
+                        print("New digit found.")
+                        firstlook = False
+                    else:
+                        print("Skipping duplicate image.")
+                        break
+
                     # Get bounding box coordinates
                     x1, y1, x2, y2 = map(int, bbox.xyxy[0])
                     width, height = x2 - x1, y2 - y1
@@ -94,12 +104,29 @@ def process_images(image_dir, save_cropped_dir='temp_crops'):
                         cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
                         cv2.putText(img, label_with_confidence, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
 
-                        if confidence_percentage < 80:
-                            flag = True
-                        else:
-                            flag = False
-                        inserts.append((os.path.join('processed_images', img_name), object_label, confidence_percentage, flag))
-                        print("Appended " + str(object_label) + " with confidence " + str(confidence_percentage) + ", flag: " + str(flag))
+                        try:
+                            #convert max rolls to integer of die max
+                            max_roll = False
+                            if object_label == 'max':
+                                object_label = die_max
+                                max_roll = True
+                            else:
+                                object_label = int(object_label)
+
+                            if object_label >= die_max and not max_roll:
+                                flag = True
+                                object_label = 0
+                                print("Roll misidentified.  Flagging and assigning value 0.")
+                            elif confidence_percentage < confidence_thresholds[object_label-1]:
+                                flag = True
+                            else:
+                                flag = False
+
+                            inserts.append((os.path.join('processed_images', img_name), object_label, confidence_percentage, flag))
+                            print("Appended " + str(object_label) + " with confidence " + str(confidence_percentage) + ", flag: " + str(flag))
+
+                        except:
+                            print('Something went wrong with identification.')
                     else:
                         # Handle cases where no objects are classified
                         print(f"No objects detected in cropped image {cropped_img_path}")

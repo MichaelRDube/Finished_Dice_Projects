@@ -64,8 +64,18 @@ def process_images(image_dir, save_cropped_dir='temp_crops'):
             # First stage: Detect objects
             results_stage1 = model_stage1(img)
 
+            firstlook = True
             for i, result in enumerate(results_stage1):
+
                 for bbox in result.boxes:
+
+                    if firstlook:
+                        print("New digit found.")
+                        firstlook = False
+                    else:
+                        print("Skipping duplicate image.")
+                        break
+
                     # Get bounding box coordinates
                     x1, y1, x2, y2 = map(int, bbox.xyxy[0])
                     width, height = x2 - x1, y2 - y1

@@ -57,8 +57,16 @@ def process_images(image_dir):
 
             results = model(img)
 
+            firstlook = True
             for result in results:
                 for bbox in result.boxes:
+                    if firstlook:
+                        print("New digit found.")
+                        firstlook = False
+                    else:
+                        print("Skipping duplicate image.")
+                        break
+
                     # Get bounding box coordinates
                     x1, y1, x2, y2 = map(int, bbox.xyxy[0])
                     width, height = x2 - x1, y2 - y1
