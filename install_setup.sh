@@ -32,7 +32,7 @@ source myenv/bin/activate
 
 # Install Python libraries within the virtual environment
 echo "Installing and upgrading Python libraries within the virtual environment..."
-pip install --upgrade pillow ultralytics
+pip install --upgrade pillow ultralytics pyserial
 
 # Configure camera settings (optional)
 echo "Configuring camera settings..."
@@ -54,4 +54,12 @@ v4l2-ctl -d /dev/video0 --set-ctrl=focus_automatic_continuous=0
 v4l2-ctl -d /dev/video0 --set-ctrl=zoom_absolute=100
 
 echo "Camera configuration complete!"
+
+# Add user to dialout group for serial port access
+echo "Granting user permissions to access serial ports..."
+sudo usermod -a -G dialout $USER
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+
+echo "Please restart computer for the dialout group changes to take effect."
 

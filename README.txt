@@ -8,6 +8,9 @@ If not already run, navigate to the directory which holds
 die-rolling projects and run install_setup.sh
 (sudo ./install_setup.sh).
 
+MAKE SURE TO FULLY RESTART THE COMPUTER, or permissions
+may not be granted by install.sh as intended.
+
 This should install any libraries needed for the project
 on Ubuntu Linux and configure the camera settings to match
 training conditioins.
@@ -15,7 +18,7 @@ training conditioins.
 These installations will be made inside a virtual
 environment.  This virtual environment must be activated
 before using scripts.  While in the directory that holds
-install_setup.sh, enter:
+the myenv directory, enter:
 "source myenv/bin/activate"
 and the virtual environment will be active in that terminal
 until deactivated, or until the terminal closes.
@@ -62,6 +65,27 @@ manual_roll.py-
     1 higher than the highest indexed image in 'captured_images'
     AND 'processed_images'.
 
+auto_roll.py-
+    To roll a die and take pictures of the rolls automatically,
+    the User may run auto_roll.py (python3 auto_roll.py).  The
+    python script will attempt to connect to the Arduino and
+    begin rolling the die.  After a random number of shakes, the
+    box will be still for a moment as the script takes a picture
+    of the die.  Once the picture has been taken, the box will
+    repeat the process indefinitely.
+    The User may at any time press Ctrl+C in whichever terminal
+    window has been running auto_roll.py to stop the rolling
+    process and exit the program.
+    Note that the box may not stop shaking right away, as the
+    Arduino does not receive the command to stop.  Simply wait
+    until the box stops moving completely, and it will be safe
+    to move.
+    Any pictures taken by auto_roll.py will be automatically named
+    according to die type + index, and saved in 'captured_images'.
+    To avoid saving over existing images, this index will start
+    1 higher than the highest indexed image in 'captured_images'
+    AND 'processed_images'.
+    
 dump.py-
     To identify digits present in images kept in 'captured_images',
     the User may run dump.py (python3 dump.py).

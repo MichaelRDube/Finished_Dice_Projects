@@ -29,16 +29,24 @@ def save_to_database(inserts):
         conn.close()
 
 def sets_match(set1, set2):
+    print("Comparing:")
     print(set1)
+    print("Against known set:")
     print(set2)
 
     for item in set1:
         if item not in set2:
+            print("Not a match")
+            print()
             return False
     for item in set2:
         if item not in set1:
+            print("Not a match")
+            print()
             return False
         
+    print("Match found")
+    print()
     return True
 
 def process_images(image_dir):
@@ -65,7 +73,7 @@ def process_images(image_dir):
             img = cv2.resize(img, new_size)
 
             cv2.imshow('Image Preview', img)
-            cv2.waitKey(0)
+            cv2.waitKey(1)
 
             results = model(img)
 
@@ -132,7 +140,7 @@ def process_images(image_dir):
 
             # Show the image with boxes and labels
             cv2.imshow('Image Preview', img)
-            cv2.waitKey(0)
+            cv2.waitKey(1)
 
     #move files from captured_images to processed_images
     for file in os.listdir('./captured_images'):
