@@ -80,6 +80,39 @@ def display_image():
     image_slot.image = image_to_display
     return
 
+def delete():
+    #Deletes roll from database
+    
+    global index
+    global image_list
+    global current_image
+    global corrections_box
+    global flagged_label
+    flagged_label.config(text='', bg=root.cget('bg'))
+    
+    conn = sqlite3.connect('dice.db')
+    cursor = conn.cursor()
+    
+    delete_query = '''
+        DELETE FROM rolls
+        WHERE rollNum = ?
+    '''
+    
+    query_data = (current_image.rollnum,)
+    
+    cursor.execute(delete_query, query_data)
+    
+    conn.commit()
+    conn.close()
+    
+    if index >= len(image_list)-1:
+        index -= 1
+
+    refresh()
+    jump(index)
+
+    return
+
 def refresh():
     #queries the database to check the latest collection of rolls
     
@@ -217,7 +250,6 @@ int_box.insert(0, corrections_box.get())
 next_of_value_label = Label(next_of_value_frame, text='Next of Value:')
 next_of_value_label.grid(row=0, column=1)
 
-
 path_label = Label(root, text=project_root + current_image.photo_path[0:len(current_image.photo_path)])
 path_label.grid(row=3, column=1)
 
@@ -248,6 +280,9 @@ button_next_of_value.grid(row=1, column=2, sticky='ne')
 
 button_prev_of_value = Button(next_of_value_frame, text='<-', padx=5, pady=2, command=lambda:find_label(-1))
 button_prev_of_value.grid(row=1, column=0, sticky='nw')
+
+button_delete = Button(root, text="Delete", padx=10, pady=5, command=delete)
+button_delete.grid(row=5, column=0, sticky='sw')
 
 # Ensure the grid row and column expand to fill space
 root.grid_rowconfigure(0, weight=1)

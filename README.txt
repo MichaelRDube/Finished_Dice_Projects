@@ -184,6 +184,17 @@ TheGUI.py-
             already be displayed, the User may simply press the
             Make Correction button to remove the flagged status.)
             
-            
+        Delete-  If the User finds any image of a roll that is
+        visually unclear to the point of being unable to make a
+        manual correction, this image should likely be removed
+        from the dataset.  The User may press the Delete button
+        to drop it from the records kept in dice.db.
+            (Note that this will not delete the picture from the
+            dataset, in case the User makes a mistake or changes
+            their mind.  To completely remove the picture itself,
+            the User should find that particular image in that
+            project's 'processed_images' directory and delete it
+            manually after deleting it from the database using
+            the GUI.)
             
             
