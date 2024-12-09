@@ -197,4 +197,22 @@ TheGUI.py-
             manually after deleting it from the database using
             the GUI.)
             
+to_csv.py-
+    Once the User has acquired sufficient images of rolls, logged
+    them into dice.db with dump.py, and made the necessary
+    corrections to the flagged entries via TheGUI.py, the User may
+    run to_csv.py (python3 to_csv.py) to move the tally of rolls
+    in dice.db to a csv file (roll_tally.csv) for easy statistics.
+    Upon being activated, to_csv.py will issue the User a reminder
+    to make any necessary corrections before continuing.  to_csv.py
+    will execute after the User presses Enter, unless the script is
+    terminated early.  The User may delay pressing Enter to open a 
+    different terminal and make necessary corrections with
+    TheGUI.py. (reminder to activate the virtual environment
+    by typing "source myenv/bin/activate" on a new terminal before
+    attempting to run any scripts contained by Finished_Dice_Projects,
+    or some scripts may not work properly).  Alternatively, the User
+    may make their corrections after proceeding with to_csv.py and
+    run to_csv.py again after the corrections have been made.  This
+    will overwrite any out-of-date data in roll_tally.csv.
             
